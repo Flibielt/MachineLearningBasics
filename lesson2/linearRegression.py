@@ -57,7 +57,6 @@ print("For population = 35,000, we predict a profit of " + str(predict1 * 10000)
 predict2 = np.dot([1, 7], theta)
 print('For population = 70,000, we predict a profit of ' +  str(predict2 * 10000))
 
-
 # ============= Part 4: Visualizing J(theta_0, theta_1) =============
 print('Visualizing J(theta_0, theta_1) ...\n')
 
@@ -76,14 +75,16 @@ for i in range(len(theta0Vals)):
 
 # Because of the way meshgrids work in the surf command, we need to
 # transpose jVals before calling surf, or else the axes will be flipped
-JVals = np.transpose(jVals)
+jVals = np.transpose(jVals)
+
+X, Y = np.meshgrid(theta0Vals, theta1Vals)
 
 print("jVals")
 print(jVals)
 # Surface plot
 fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-surf = ax.plot_surface(theta0Vals, theta1Vals, jVals)       ###### BUG!!
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(X, Y, jVals)
 plt.xlabel(r'$\theta_0$')
 plt.ylabel(r'$\theta_1$')
 plt.draw()
@@ -91,7 +92,7 @@ plt.draw()
 # Contour plot
 plt.figure()
 # Plot jVals as 15 contours spaced logarithmically between 0.01 and 100
-plt.contour(theta0Vals, theta1Vals, jVals, np.logspace(-2, 3, 20))
+plt.contour(X, Y, jVals, np.logspace(-2, 3, 20))
 plt.xlabel(r'$\theta_0$')
 plt.ylabel(r'$\theta_1$')
 plt.plot(theta[0], theta[1], 'rx', 10, 2)
